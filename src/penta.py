@@ -38,7 +38,7 @@ def parse_line(pileup):
     chrom, pos, ref = mp[0:3] #site data
     pop_bam = mp[3:]
     idx = list(range(0,len(pop_bam), 3))
-    site_dict = {"chrom": chrom, "ref": ref, "pos": pos, "pop_bam": pop_bam, "idx":idx}
+    site_dict = {"chrom": chrom, "ref": ref.upper(), "pos": pos, "pop_bam": pop_bam, "idx":idx}
     return site_dict
 
 
