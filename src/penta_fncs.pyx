@@ -3,10 +3,10 @@ import numpy as np
 
 def make_penta(seq_str, qual_str, depth_str, ref, qual_min = 50):
     seq_str = seq_str.upper()
-    
-    nuc_dict = {"A":0, "T":1, "G":2, "C":3, "*":4}
-    nucs = {"A": 0, "T": 0, "G":0, "C":0, "*":0}
-    inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0}
+
+    nuc_dict = {"A":0, "T":1, "G":2, "C":3, "*":4, "N":5}
+    nucs = {"A": 0, "T": 0, "G":0, "C":0, "*":0, "N":0}
+    inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0, "N":0}
     
     if depth_str == "0" and seq_str == "*" and qual_str == "*":
         seq_channel = [[0,0,0,0,0], [0,0,0,0,0]]
@@ -59,7 +59,8 @@ def make_penta(seq_str, qual_str, depth_str, ref, qual_min = 50):
                     j += 1
                 gap_int = int(gap_str)
                 i += gap_int
-                
-        seq_channel = [list(nucs.values()), list(inserts.values())]
+
+        seq_channel = [list(nucs.values())[0:5], list(inserts.values())[0:5]]
+ 
         return seq_channel
 

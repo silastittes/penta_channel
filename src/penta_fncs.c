@@ -986,6 +986,15 @@ static PyObject* __Pyx__CallUnboundCMethod0(__Pyx_CachedCFunction* cfunc, PyObje
 #define __Pyx_CallUnboundCMethod0(cfunc, self)  __Pyx__CallUnboundCMethod0(cfunc, self)
 #endif
 
+/* SliceTupleAndList.proto */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyList_GetSlice(PyObject* src, Py_ssize_t start, Py_ssize_t stop);
+static CYTHON_INLINE PyObject* __Pyx_PyTuple_GetSlice(PyObject* src, Py_ssize_t start, Py_ssize_t stop);
+#else
+#define __Pyx_PyList_GetSlice(seq, start, stop)   PySequence_GetSlice(seq, start, stop)
+#define __Pyx_PyTuple_GetSlice(seq, start, stop)  PySequence_GetSlice(seq, start, stop)
+#endif
+
 /* Import.proto */
 static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level);
 
@@ -1091,6 +1100,7 @@ static const char __pyx_k_0[] = "0";
 static const char __pyx_k_A[] = "A";
 static const char __pyx_k_C[] = "C";
 static const char __pyx_k_G[] = "G";
+static const char __pyx_k_N[] = "N";
 static const char __pyx_k_T[] = "T";
 static const char __pyx_k_i[] = "i";
 static const char __pyx_k_j[] = "j";
@@ -1135,6 +1145,7 @@ static PyObject *__pyx_kp_s_0;
 static PyObject *__pyx_n_s_A;
 static PyObject *__pyx_n_s_C;
 static PyObject *__pyx_n_s_G;
+static PyObject *__pyx_n_s_N;
 static PyObject *__pyx_n_s_T;
 static PyObject *__pyx_kp_s__2;
 static PyObject *__pyx_kp_s__3;
@@ -1181,6 +1192,7 @@ static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
 static PyObject *__pyx_int_3;
 static PyObject *__pyx_int_4;
+static PyObject *__pyx_int_5;
 static PyObject *__pyx_int_50;
 static PyObject *__pyx_tuple__9;
 static PyObject *__pyx_codeobj__10;
@@ -1324,7 +1336,7 @@ static PyObject *__pyx_pf_12make_pentaCY_make_penta(CYTHON_UNUSED PyObject *__py
  * def make_penta(seq_str, qual_str, depth_str, ref, qual_min = 50):
  *     seq_str = seq_str.upper()             # <<<<<<<<<<<<<<
  * 
- *     nuc_dict = {"A":0, "T":1, "G":2, "C":3, "*":4}
+ *     nuc_dict = {"A":0, "T":1, "G":2, "C":3, "*":4, "N":5}
  */
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_seq_str, __pyx_n_s_upper); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -1352,56 +1364,59 @@ static PyObject *__pyx_pf_12make_pentaCY_make_penta(CYTHON_UNUSED PyObject *__py
   /* "penta_fncs.pyx":7
  *     seq_str = seq_str.upper()
  * 
- *     nuc_dict = {"A":0, "T":1, "G":2, "C":3, "*":4}             # <<<<<<<<<<<<<<
- *     nucs = {"A": 0, "T": 0, "G":0, "C":0, "*":0}
- *     inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0}
+ *     nuc_dict = {"A":0, "T":1, "G":2, "C":3, "*":4, "N":5}             # <<<<<<<<<<<<<<
+ *     nucs = {"A": 0, "T": 0, "G":0, "C":0, "*":0, "N":0}
+ *     inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0, "N":0}
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_A, __pyx_int_0) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_T, __pyx_int_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_G, __pyx_int_2) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_C, __pyx_int_3) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_kp_s_, __pyx_int_4) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_N, __pyx_int_5) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   __pyx_v_nuc_dict = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "penta_fncs.pyx":8
  * 
- *     nuc_dict = {"A":0, "T":1, "G":2, "C":3, "*":4}
- *     nucs = {"A": 0, "T": 0, "G":0, "C":0, "*":0}             # <<<<<<<<<<<<<<
- *     inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0}
+ *     nuc_dict = {"A":0, "T":1, "G":2, "C":3, "*":4, "N":5}
+ *     nucs = {"A": 0, "T": 0, "G":0, "C":0, "*":0, "N":0}             # <<<<<<<<<<<<<<
+ *     inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0, "N":0}
  * 
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_A, __pyx_int_0) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_T, __pyx_int_0) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_G, __pyx_int_0) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_C, __pyx_int_0) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_kp_s_, __pyx_int_0) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_N, __pyx_int_0) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   __pyx_v_nucs = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "penta_fncs.pyx":9
- *     nuc_dict = {"A":0, "T":1, "G":2, "C":3, "*":4}
- *     nucs = {"A": 0, "T": 0, "G":0, "C":0, "*":0}
- *     inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0}             # <<<<<<<<<<<<<<
+ *     nuc_dict = {"A":0, "T":1, "G":2, "C":3, "*":4, "N":5}
+ *     nucs = {"A": 0, "T": 0, "G":0, "C":0, "*":0, "N":0}
+ *     inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0, "N":0}             # <<<<<<<<<<<<<<
  * 
  *     if depth_str == "0" and seq_str == "*" and qual_str == "*":
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_A, __pyx_int_0) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_T, __pyx_int_0) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_G, __pyx_int_0) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_C, __pyx_int_0) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_1, __pyx_kp_s_, __pyx_int_0) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_N, __pyx_int_0) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
   __pyx_v_inserts = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "penta_fncs.pyx":11
- *     inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0}
+ *     inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0, "N":0}
  * 
  *     if depth_str == "0" and seq_str == "*" and qual_str == "*":             # <<<<<<<<<<<<<<
  *         seq_channel = [[0,0,0,0,0], [0,0,0,0,0]]
@@ -1489,7 +1504,7 @@ static PyObject *__pyx_pf_12make_pentaCY_make_penta(CYTHON_UNUSED PyObject *__py
     goto __pyx_L0;
 
     /* "penta_fncs.pyx":11
- *     inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0}
+ *     inserts = {"A": 0, "T": 0, "G":0, "C":0, "*":0, "N":0}
  * 
  *     if depth_str == "0" and seq_str == "*" and qual_str == "*":             # <<<<<<<<<<<<<<
  *         seq_channel = [[0,0,0,0,0], [0,0,0,0,0]]
@@ -2137,7 +2152,7 @@ static PyObject *__pyx_pf_12make_pentaCY_make_penta(CYTHON_UNUSED PyObject *__py
  *                 gap_int = int(gap_str)
  *                 i += gap_int             # <<<<<<<<<<<<<<
  * 
- *         seq_channel = [list(nucs.values()), list(inserts.values())]
+ *         seq_channel = [list(nucs.values())[0:5], list(inserts.values())[0:5]]
  */
         __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_i, __pyx_v_gap_int); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
@@ -2158,34 +2173,40 @@ static PyObject *__pyx_pf_12make_pentaCY_make_penta(CYTHON_UNUSED PyObject *__py
     /* "penta_fncs.pyx":63
  *                 i += gap_int
  * 
- *         seq_channel = [list(nucs.values()), list(inserts.values())]             # <<<<<<<<<<<<<<
- *         return seq_channel
+ *         seq_channel = [list(nucs.values())[0:5], list(inserts.values())[0:5]]             # <<<<<<<<<<<<<<
  * 
+ *         return seq_channel
  */
     __pyx_t_3 = __Pyx_PyDict_Values(__pyx_v_nucs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_1 = PySequence_List(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyDict_Values(__pyx_v_inserts); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyList_GetSlice(__pyx_t_1, 0, 5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = PySequence_List(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_1 = __Pyx_PyDict_Values(__pyx_v_inserts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_2 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyList_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_1 = __Pyx_PyList_GetSlice(__pyx_t_2, 0, 5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_3);
+    PyList_SET_ITEM(__pyx_t_2, 0, __pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_1);
-    PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_2);
-    PyList_SET_ITEM(__pyx_t_3, 1, __pyx_t_2);
-    __pyx_t_1 = 0;
-    __pyx_t_2 = 0;
-    __pyx_v_seq_channel = ((PyObject*)__pyx_t_3);
+    PyList_SET_ITEM(__pyx_t_2, 1, __pyx_t_1);
     __pyx_t_3 = 0;
+    __pyx_t_1 = 0;
+    __pyx_v_seq_channel = ((PyObject*)__pyx_t_2);
+    __pyx_t_2 = 0;
 
-    /* "penta_fncs.pyx":64
+    /* "penta_fncs.pyx":65
+ *         seq_channel = [list(nucs.values())[0:5], list(inserts.values())[0:5]]
  * 
- *         seq_channel = [list(nucs.values()), list(inserts.values())]
  *         return seq_channel             # <<<<<<<<<<<<<<
  * 
  */
@@ -2271,6 +2292,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_A, __pyx_k_A, sizeof(__pyx_k_A), 0, 0, 1, 1},
   {&__pyx_n_s_C, __pyx_k_C, sizeof(__pyx_k_C), 0, 0, 1, 1},
   {&__pyx_n_s_G, __pyx_k_G, sizeof(__pyx_k_G), 0, 0, 1, 1},
+  {&__pyx_n_s_N, __pyx_k_N, sizeof(__pyx_k_N), 0, 0, 1, 1},
   {&__pyx_n_s_T, __pyx_k_T, sizeof(__pyx_k_T), 0, 0, 1, 1},
   {&__pyx_kp_s__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 0, 1, 0},
   {&__pyx_kp_s__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 0, 1, 0},
@@ -2349,6 +2371,7 @@ static int __Pyx_InitGlobals(void) {
   __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_3 = PyInt_FromLong(3); if (unlikely(!__pyx_int_3)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_4 = PyInt_FromLong(4); if (unlikely(!__pyx_int_4)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_5 = PyInt_FromLong(5); if (unlikely(!__pyx_int_5)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_50 = PyInt_FromLong(50); if (unlikely(!__pyx_int_50)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -3526,6 +3549,65 @@ bad:
     else
         return PyDict_Values(d);
 }
+
+/* SliceTupleAndList */
+  #if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE void __Pyx_crop_slice(Py_ssize_t* _start, Py_ssize_t* _stop, Py_ssize_t* _length) {
+    Py_ssize_t start = *_start, stop = *_stop, length = *_length;
+    if (start < 0) {
+        start += length;
+        if (start < 0)
+            start = 0;
+    }
+    if (stop < 0)
+        stop += length;
+    else if (stop > length)
+        stop = length;
+    *_length = stop - start;
+    *_start = start;
+    *_stop = stop;
+}
+static CYTHON_INLINE void __Pyx_copy_object_array(PyObject** CYTHON_RESTRICT src, PyObject** CYTHON_RESTRICT dest, Py_ssize_t length) {
+    PyObject *v;
+    Py_ssize_t i;
+    for (i = 0; i < length; i++) {
+        v = dest[i] = src[i];
+        Py_INCREF(v);
+    }
+}
+static CYTHON_INLINE PyObject* __Pyx_PyList_GetSlice(
+            PyObject* src, Py_ssize_t start, Py_ssize_t stop) {
+    PyObject* dest;
+    Py_ssize_t length = PyList_GET_SIZE(src);
+    __Pyx_crop_slice(&start, &stop, &length);
+    if (unlikely(length <= 0))
+        return PyList_New(0);
+    dest = PyList_New(length);
+    if (unlikely(!dest))
+        return NULL;
+    __Pyx_copy_object_array(
+        ((PyListObject*)src)->ob_item + start,
+        ((PyListObject*)dest)->ob_item,
+        length);
+    return dest;
+}
+static CYTHON_INLINE PyObject* __Pyx_PyTuple_GetSlice(
+            PyObject* src, Py_ssize_t start, Py_ssize_t stop) {
+    PyObject* dest;
+    Py_ssize_t length = PyTuple_GET_SIZE(src);
+    __Pyx_crop_slice(&start, &stop, &length);
+    if (unlikely(length <= 0))
+        return PyTuple_New(0);
+    dest = PyTuple_New(length);
+    if (unlikely(!dest))
+        return NULL;
+    __Pyx_copy_object_array(
+        ((PyTupleObject*)src)->ob_item + start,
+        ((PyTupleObject*)dest)->ob_item,
+        length);
+    return dest;
+}
+#endif
 
 /* Import */
   static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level) {
