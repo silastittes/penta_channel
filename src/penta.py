@@ -5,7 +5,7 @@ import io
 import pandas as pd
 import subprocess
 import argparse
-from make_pentaCY import make_penta
+#from make_pentaCY import make_penta
 
 parser = argparse.ArgumentParser(description="Produce five channel representation files from sorted bams")
 
