@@ -45,8 +45,11 @@ def parse_line(pileup):
 def init_penta(bam_in, h5_out):
     with h5py.File(h5_out, 'w') as f:
 
-        channels = f.create_dataset('channels', (0, 0), maxshape=(None,None), dtype='f8', chunks=True,  compression="gzip", compression_opts=9)
-        makers = f.create_dataset('markers', (0, 0), maxshape=(None,2), dtype = 'S100', chunks=True,  compression="gzip", compression_opts=9)
+        #channels = f.create_dataset('channels', (0, 0), maxshape=(None,None), dtype='f8', chunks=True,  compression="gzip", compression_opts=9)
+        #makers = f.create_dataset('markers', (0, 0), maxshape=(None,2), dtype = 'S100', chunks=True,  compression="gzip", compression_opts=9)
+
+        channels = f.create_dataset('channels', (0, 0), maxshape=(None,None), dtype='f8', chunks=True)
+        makers = f.create_dataset('markers', (0, 0), maxshape=(None,2), dtype = 'S100', chunks=True)
 
         metadata = {'id': bam_in
                    }
