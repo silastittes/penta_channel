@@ -151,7 +151,7 @@ else:
     if args.positions_file: 
         cmd = "samtools mpileup -A -aa -l {0} {1}".format(args.positions_file, args.bam_infile).split()
     else:
-        cmd = "samtools mpileup -A -aa {1}".format(args.bam_infile).split()
+        cmd = "samtools mpileup -A -aa {0}".format(args.bam_infile).split()
 
 
 penta_all = []
